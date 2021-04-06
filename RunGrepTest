@@ -28,12 +28,12 @@ builddir=`pwd`
 pcre2grep=$builddir/pcre2grep
 pcre2test=$builddir/pcre2test
 
-if [ ! -x $pcre2grep ] ; then
+if [ ! -x $pcre2grep -a ! -x $pcre2grep.exe ] ; then
   echo "** $pcre2grep does not exist or is not executable."
   exit 1
 fi
 
-if [ ! -x $pcre2test ] ; then
+if [ ! -x $pcre2test -a ! -x $pcre2test.exe] ; then
   echo "** $pcre2test does not exist or is not executable."
   exit 1
 fi
@@ -683,6 +683,7 @@ echo "RC=$?" >>testtrygrep
 
 # Now compare the results.
 
+dos2unix -f testtrygrep
 $cf $srcdir/testdata/grepoutput testtrygrep
 if [ $? != 0 ] ; then exit 1; fi
 
