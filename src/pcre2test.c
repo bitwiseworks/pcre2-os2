@@ -103,8 +103,11 @@ that first, falling back to readline/readline.h. */
 /* Put the test for interactive input into a macro so that it can be changed if
 required for different environments. */
 
+#ifdef __OS2__  //our isatty() is buggy see libc issue #105
+#define INTERACTIVE(f) (f == stdin)
+#else
 #define INTERACTIVE(f) isatty(fileno(f))
-
+#endif
 
 /* ---------------------- System-specific definitions ---------------------- */
 
@@ -8709,6 +8712,7 @@ while (argc > 1 && argv[op][0] == '-' && argv[op][1] != 0)
           (unsigned long int)(rlim.rlim_max));
       exit(1);
       }
+#ifndef __OS2__
     rc = setrlimit(RLIMIT_STACK, &rlim);
     if (rc != 0)
       {
@@ -8716,6 +8720,7 @@ while (argc > 1 && argv[op][0] == '-' && argv[op][1] != 0)
         (unsigned long int)stack_size, strerror(errno));
       exit(1);
       }
+#endif
     op++;
     argc--;
 #endif
