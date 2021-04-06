@@ -466,12 +466,15 @@ EXTRA_DIST += \
 
 if WITH_PCRE2_8
 libpcre2_8_la_LDFLAGS = $(EXTRA_LIBPCRE2_8_LDFLAGS)
+libpcre2_8_la_LDFLAGS += -shortname pcre28
 endif # WITH_PCRE2_8
 if WITH_PCRE2_16
 libpcre2_16_la_LDFLAGS = $(EXTRA_LIBPCRE2_16_LDFLAGS)
+libpcre2_16_la_LDFLAGS += -shortname pcre26
 endif # WITH_PCRE2_16
 if WITH_PCRE2_32
 libpcre2_32_la_LDFLAGS = $(EXTRA_LIBPCRE2_32_LDFLAGS)
+libpcre2_32_la_LDFLAGS += -shortname pcre23
 endif # WITH_PCRE2_32
 
 if WITH_VALGRIND
@@ -508,6 +511,7 @@ libpcre2_posix_la_CFLAGS = \
   $(VISIBILITY_CFLAGS) $(AM_CFLAGS)
 libpcre2_posix_la_LDFLAGS = $(EXTRA_LIBPCRE2_POSIX_LDFLAGS)
 libpcre2_posix_la_LIBADD = libpcre2-8.la
+libpcre2_posix_la_LDFLAGS += -shortname pcre2p
 if WITH_GCOV
 libpcre2_posix_la_CFLAGS += $(GCOV_CFLAGS)
 endif # WITH_GCOV
