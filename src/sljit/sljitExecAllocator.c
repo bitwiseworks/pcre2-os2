@@ -91,6 +91,26 @@ static SLJIT_INLINE void free_chunk(void *chunk, sljit_uw size)
 	VirtualFree(chunk, 0, MEM_RELEASE);
 }
 
+#elif defined(__OS2__)
+
+#define INCL_BASE
+#include <os2.h>
+
+static SLJIT_INLINE void* alloc_chunk(sljit_uw size)
+{
+	PVOID ptr;
+	APIRET arc = DosAllocMem(&ptr, size, PAG_COMMIT | PAG_READ | PAG_WRITE | PAG_EXECUTE | OBJ_ANY);
+	if (arc)
+		arc = DosAllocMem(&ptr, size, PAG_COMMIT | PAG_READ | PAG_WRITE | PAG_EXECUTE);
+	return arc ? NULL : ptr;
+}
+
+static SLJIT_INLINE void free_chunk(void *chunk, sljit_uw size)
+{
+	SLJIT_UNUSED_ARG(size);
+	DosFreeMem(chunk);
+}
+
 #else
 
 #ifdef __APPLE__
