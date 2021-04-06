@@ -38,7 +38,7 @@ case `uname -s` in
 esac
 
 libS=
-if test @libdir@ != /usr/lib ; then
+if test @libdir@ != /@unixroot/usr/lib ; then
   libS=-L@libdir@
 fi
 
@@ -69,14 +69,14 @@ while test $# -gt 0; do
       echo @PACKAGE_VERSION@
       ;;
     --cflags)
-      if test @includedir@ != /usr/include ; then
+      if test @includedir@ != /@unixroot/usr/include ; then
         includes=-I@includedir@
       fi
       echo $includes @PCRE2_STATIC_CFLAG@
       ;;
     --cflags-posix)
       if test @enable_pcre2_8@ = yes ; then
-        if test @includedir@ != /usr/include ; then
+        if test @includedir@ != /@unixroot/usr/include ; then
           includes=-I@includedir@
         fi
         echo $includes @PCRE2_STATIC_CFLAG@
