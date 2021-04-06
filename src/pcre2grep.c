@@ -74,7 +74,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include lib$routines
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) || defined(__OS2__)
 #include <io.h>                /* For _setmode() */
 #include <fcntl.h>             /* For _O_BINARY */
 #endif
@@ -182,7 +182,7 @@ any messages written to stdout must have \r\n as their line terminator. This is
 handled by using STDOUT_NL as the newline string. We also use a normal double
 quote for the example, as single quotes aren't usually available. */
 
-#ifdef WIN32
+#if defined(WIN32) || defined(__OS2__)
 #define STDOUT_NL     "\r\n"
 #define STDOUT_NL_LEN  2
 #define QUOT          "\""
@@ -3810,6 +3810,9 @@ must use STDOUT_NL to terminate lines. */
 
 #ifdef WIN32
 _setmode(_fileno(stdout), _O_BINARY);
+#endif
+#ifdef __OS2__
+setmode(fileno(stdout), O_BINARY);
 #endif
 
 /* Process the options */

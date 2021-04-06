@@ -152,6 +152,13 @@ patterns. */
 #define OUTPUT_MODE  "w"
 #define BINARY_INPUT_MODE   "rb"
 #define BINARY_OUTPUT_MODE  "wb"
+#elif defined( __OS2__)
+#include <io.h>                /* For setmode() */
+#include <fcntl.h>             /* For O_BINARY */
+#define INPUT_MODE          "r"
+#define OUTPUT_MODE         "wb"
+#define BINARY_INPUT_MODE   "rb"
+#define BINARY_OUTPUT_MODE  "wb"
 #else
 #define INPUT_MODE          "rb"
 #define OUTPUT_MODE         "wb"
@@ -8593,6 +8600,9 @@ it set 0x8000, but then I was advised that _O_BINARY was better. */
 
 #if defined(_WIN32) || defined(WIN32)
 _setmode( _fileno( stdout ), _O_BINARY );
+#endif
+#if defined(__OS2__)
+setmode( fileno( stdout ), O_BINARY );
 #endif
 
 /* Initialization that does not depend on the running mode. */
