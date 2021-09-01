@@ -103,8 +103,8 @@ that first, falling back to readline/readline.h. */
 /* Put the test for interactive input into a macro so that it can be changed if
 required for different environments. */
 
-#ifdef __OS2__  //our isatty() is buggy see libc issue #105
-#define INTERACTIVE(f) (f == stdin)
+#ifdef __OS2__  // our isatty() is not what nix thinks, so use isterm()
+#define INTERACTIVE(f) _isterm(fileno(f))
 #else
 #define INTERACTIVE(f) isatty(fileno(f))
 #endif
